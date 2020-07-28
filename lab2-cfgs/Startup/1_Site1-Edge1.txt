@@ -1,0 +1,172 @@
+!
+! Last configuration change at 20:28:34 UTC Tue Jun 2 2020
+!
+version 16.10
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service call-home
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname Site1-Edge1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9BCE7Q0GNV5
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ no shutdown
+ description RLOC FOR LISP/VXLAN
+ ip address 11.11.11.11 255.255.255.255
+ ip router isis 
+!
+interface GigabitEthernet1
+ no shutdown
+ description SITE1-1010-USERS
+ mac-address 1010.1010.1010
+ ip address 10.10.1.1 255.255.255.0
+ no ip redirects
+ ip local-proxy-arp
+ ip route-cache same-interface
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ no shutdown
+ description LINK TO UNDERLAY
+ ip address 192.168.100.5 255.255.255.252
+ no ip redirects
+ ip local-proxy-arp
+ ip router isis 
+ ip route-cache same-interface
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ isis network point-to-point 
+!
+interface GigabitEthernet3
+ no shutdown
+ description SITE1-1020-HR
+ mac-address 2020.2020.2020
+ ip address 10.20.1.1 255.255.255.0
+ no ip redirects
+ ip local-proxy-arp
+ ip route-cache same-interface
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no shutdown
+ description SITE1-1099-INFRA
+ mac-address 9090.9090.9090
+ ip address 10.99.1.1 255.255.255.0
+ no ip redirects
+ ip local-proxy-arp
+ ip route-cache same-interface
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router isis
+ net 49.0001.0110.1101.1011.00
+ is-type level-2-only
+ domain-password cisco123
+ metric-style wide
+ log-adjacency-changes
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!
+end

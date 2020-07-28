@@ -1,0 +1,109 @@
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service call-home
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname Site1-Underlay
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+interface GigabitEthernet1
+ no shutdown
+ description LINK TO SITE1-EDGE1
+ ip address 192.168.100.6 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ no shutdown
+ description LINK TO SITE1-BORDER-CP
+ ip address 192.168.100.9 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no shutdown
+ description LINK TO SITE1-EDGE2
+ ip address 192.168.100.13 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no shutdown
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!
+end

@@ -1,0 +1,154 @@
+!
+! Last configuration change at 20:29:21 UTC Tue Jun 2 2020
+!
+version 16.10
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service call-home
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname Site1-Fusion
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9XADRDGJN9Z
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ no shutdown
+ ip address 101.101.101.101 255.255.255.255
+!
+interface GigabitEthernet1
+ no shutdown
+ description TO NONFABRIC CORE
+ ip address 100.64.1.2 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ no shutdown
+ description LINK TO SITE1 BORDER-CP
+ ip address 100.64.99.1 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no shutdown
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no shutdown
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router bgp 65100
+ bgp router-id 101.101.101.101
+ bgp log-neighbor-changes
+ network 101.101.101.101 mask 255.255.255.255
+ neighbor 100.64.1.1 remote-as 65100
+ neighbor 100.64.1.1 next-hop-self all
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!
+end

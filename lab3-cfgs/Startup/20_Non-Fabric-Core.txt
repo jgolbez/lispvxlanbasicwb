@@ -1,0 +1,154 @@
+!
+! Last configuration change at 20:29:03 UTC Tue Jun 2 2020
+!
+version 16.10
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service call-home
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname Non-Fabric-Core
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 960J8D94B0R
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ no shutdown
+ ip address 100.100.100.100 255.255.255.255
+!
+interface GigabitEthernet1
+ no shutdown
+ description TO SITE1 FUSION
+ ip address 100.64.1.1 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ no shutdown
+ description TO SITE2 FUSION
+ ip address 100.64.2.1 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no shutdown
+ description SHARED SERVICES SERVER
+ ip address 100.64.100.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no shutdown
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router bgp 65100
+ bgp router-id 100.100.100.100
+ bgp log-neighbor-changes
+ network 100.64.100.0 mask 255.255.255.0
+ network 100.100.100.100 mask 255.255.255.255
+ neighbor 100.64.1.2 remote-as 65100
+ neighbor 100.64.1.2 route-reflector-client
+ neighbor 100.64.1.2 next-hop-self all
+ neighbor 100.64.2.2 remote-as 65100
+ neighbor 100.64.2.2 route-reflector-client
+ neighbor 100.64.2.2 next-hop-self all
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!
+end

@@ -1,0 +1,155 @@
+!
+! Last configuration change at 20:28:22 UTC Tue Jun 2 2020
+!
+version 16.10
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service call-home
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname Site1-Underlay
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9CFJDSZSDZR
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface GigabitEthernet1
+ no shutdown
+ description LINK TO SITE1-EDGE1
+ ip address 192.168.100.6 255.255.255.252
+ ip router isis 
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ isis network point-to-point 
+!
+interface GigabitEthernet2
+ no shutdown
+ description LINK TO SITE1-BORDER-CP
+ ip address 192.168.100.9 255.255.255.252
+ ip router isis 
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ isis network point-to-point 
+!
+interface GigabitEthernet3
+ no shutdown
+ description LINK TO SITE1-EDGE2
+ ip address 192.168.100.13 255.255.255.252
+ ip router isis 
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ isis network point-to-point 
+!
+interface GigabitEthernet4
+ no shutdown
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router isis
+ net 49.0001.1921.6810.0009.00
+ is-type level-2-only
+ domain-password cisco123
+ metric-style wide
+ log-adjacency-changes
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ login
+!
+!
+!
+!
+!
+!
+end
